@@ -1,4 +1,4 @@
-FROM armbuilds/ubuntu-base:14.04.3
+FROM armbuilds/debian-base:jessie
 
 ENV RUBY_MAJOR 2.2
 ENV RUBY_VERSION 2.2.3
@@ -11,8 +11,8 @@ RUN echo 'install: --no-document\nupdate: --no-document' >> "$HOME/.gemrc"
 # some of ruby's build scripts are written in ruby
 # we purge this later to make sure our final image uses what we just built
 RUN apt-get update \
-	&& apt-get install -y bison libgdbm-dev ruby autoconf make \
-        zlib1g-dev openssl libssl-dev libreadline-dev libgdbm-dev \
+	&& apt-get install -y bison libgdbm-dev ruby autoconf make patch \
+        zlib1g-dev openssl libssl-dev libreadline-dev libgdbm-dev build-essential \
 	&& rm -rf /var/lib/apt/lists/* \
 	&& mkdir -p /usr/src/ruby \
 	&& curl -fSL -o ruby.tar.gz "http://cache.ruby-lang.org/pub/ruby/$RUBY_MAJOR/ruby-$RUBY_VERSION.tar.gz" \
